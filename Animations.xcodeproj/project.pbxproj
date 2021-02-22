@@ -13,6 +13,9 @@
 		4104C8D625E4171400E622A6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4104C8D425E4171400E622A6 /* Main.storyboard */; };
 		4104C8D825E4171500E622A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4104C8D725E4171500E622A6 /* Assets.xcassets */; };
 		4104C8DB25E4171500E622A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4104C8D925E4171500E622A6 /* LaunchScreen.storyboard */; };
+		4104C8E525E4174F00E622A6 /* firstPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4104C8E425E4174F00E622A6 /* firstPageVC.swift */; };
+		41A3907F25E42FD8007ADD44 /* secondPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A3907E25E42FD8007ADD44 /* secondPageVC.swift */; };
+		41A3908225E43593007ADD44 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A3908125E43593007ADD44 /* Note.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		4104C8D725E4171500E622A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4104C8DA25E4171500E622A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4104C8DC25E4171500E622A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4104C8E425E4174F00E622A6 /* firstPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstPageVC.swift; sourceTree = "<group>"; };
+		41A3907E25E42FD8007ADD44 /* secondPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = secondPageVC.swift; sourceTree = "<group>"; };
+		41A3908125E43593007ADD44 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +62,34 @@
 		4104C8CD25E4171400E622A6 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				41A3908125E43593007ADD44 /* Note.swift */,
 				4104C8CE25E4171400E622A6 /* AppDelegate.swift */,
 				4104C8D025E4171400E622A6 /* SceneDelegate.swift */,
-				4104C8D225E4171400E622A6 /* ViewController.swift */,
-				4104C8D425E4171400E622A6 /* Main.storyboard */,
+				4104C8E925E4190700E622A6 /* ViewController */,
 				4104C8D725E4171500E622A6 /* Assets.xcassets */,
 				4104C8D925E4171500E622A6 /* LaunchScreen.storyboard */,
+				4104C8E725E4175A00E622A6 /* Trash */,
 				4104C8DC25E4171500E622A6 /* Info.plist */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		4104C8E725E4175A00E622A6 /* Trash */ = {
+			isa = PBXGroup;
+			children = (
+				4104C8D225E4171400E622A6 /* ViewController.swift */,
+				4104C8D425E4171400E622A6 /* Main.storyboard */,
+			);
+			path = Trash;
+			sourceTree = "<group>";
+		};
+		4104C8E925E4190700E622A6 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4104C8E425E4174F00E622A6 /* firstPageVC.swift */,
+				41A3907E25E42FD8007ADD44 /* secondPageVC.swift */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,8 +163,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4104C8D325E4171400E622A6 /* ViewController.swift in Sources */,
+				41A3907F25E42FD8007ADD44 /* secondPageVC.swift in Sources */,
 				4104C8CF25E4171400E622A6 /* AppDelegate.swift in Sources */,
+				4104C8E525E4174F00E622A6 /* firstPageVC.swift in Sources */,
 				4104C8D125E4171400E622A6 /* SceneDelegate.swift in Sources */,
+				41A3908225E43593007ADD44 /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,10 +321,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.LongNguyen39.GitAnimation.Animations;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LongNguyen39.Animations;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -312,10 +340,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.LongNguyen39.GitAnimation.Animations;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LongNguyen39.Animations;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
