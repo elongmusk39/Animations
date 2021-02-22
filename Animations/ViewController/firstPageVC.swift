@@ -27,8 +27,9 @@ class firstPageVC: UIViewController {
     
     private let secondLabel: UILabel = {
         let lb = UILabel()
-        lb.text = "Hello there"
+        lb.text = "Animate"
         lb.textAlignment = .center
+        lb.isUserInteractionEnabled = true
         lb.layer.backgroundColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
         lb.layer.shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) //color is black
         lb.layer.shadowRadius = 4
@@ -86,9 +87,9 @@ class firstPageVC: UIViewController {
         let viewWidth = view.frame.width
         //let viewHeight = view.frame.height
         
-        mainLabel.frame = CGRect.init(x: (3*viewWidth/4) / 2,
+        mainLabel.frame = CGRect.init(x: viewWidth/3,
                                       y: 100,
-                                      width: viewWidth/4,
+                                      width: viewWidth/3,
                                       height: 30)
         
         secondLabel.frame = CGRect.init(x: (3*viewWidth/4) / 2,
@@ -113,8 +114,11 @@ class firstPageVC: UIViewController {
     
     func UIStuff() {
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(presentSecondPage))
-        mainLabel.addGestureRecognizer(tap)
+        let tap1 = UITapGestureRecognizer(target: self, action: #selector(presentSecondPage))
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(runAnimation))
+        mainLabel.addGestureRecognizer(tap1)
+        secondLabel.addGestureRecognizer(tap2)
+        
         
         view.addSubview(mainLabel)
         view.addSubview(secondLabel)
@@ -129,6 +133,11 @@ class firstPageVC: UIViewController {
         
         let vc = secondPageVC()
         present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func runAnimation() {
+        print("DEBUG: start moving a block..")
+        
     }
     
     
