@@ -21,6 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = root
         window?.makeKeyAndVisible()
         
+        /*self.window = UIWindow(frame: UIScreen.main.bounds)
+        if let window = self.window {
+            window.rootViewController = PageViewController()
+            window.makeKeyAndVisible()
+        }*/
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

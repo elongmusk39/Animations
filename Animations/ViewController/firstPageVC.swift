@@ -12,6 +12,13 @@ class firstPageVC: UIViewController {
     
 //MARK: - Properties
     
+    var myControllers = [UIViewController]()
+    let pageControl = UIPageControl()
+    let page1 = Page1ViewController()
+    let page2 = Page2ViewController()
+    let page3 = Page3ViewController()
+    
+    
     private let mainLabel: UILabel = {
         let lb = UILabel()
         lb.text = "Pop 2nd page"
@@ -69,17 +76,48 @@ class firstPageVC: UIViewController {
         return iv
     }()
     
+    private let PageVCBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("PageVC Swipe", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.backgroundColor = .black
+        btn.addTarget(self, action: #selector(presentPageViewController), for: .touchUpInside)
+        
+        return btn
+    }()
+    
     
 //MARK: - View Scenes
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
         view.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
         
+        myControllers.append(page1)
+        myControllers.append(page2)
+        myControllers.append(page3)
+        
         UIStuff()
+        
+        
     }
 
+//MARK: - PageVC presenting
+//use the func below to present the PageController once it is open
+    
+    /*override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        //actually you can just say ".now()", no need to delay 2s
+        DispatchQueue.main.asyncAfter(deadline: .now()+2) {
+            self.presentPageVC()
+            self.pageControlStuff()
+        }
+    }*/
+    
+    
+//MARK: - UI layout
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -115,7 +153,7 @@ class firstPageVC: UIViewController {
     func UIStuff() {
         
         let tap1 = UITapGestureRecognizer(target: self, action: #selector(presentSecondPage))
-        let tap2 = UITapGestureRecognizer(target: self, action: #selector(runAnimation))
+        let tap2 = UITapGestureRecognizer(target: self, action: #selector(runAnimatedAlert))
         mainLabel.addGestureRecognizer(tap1)
         secondLabel.addGestureRecognizer(tap2)
         
@@ -124,7 +162,30 @@ class firstPageVC: UIViewController {
         view.addSubview(secondLabel)
         view.addSubview(smallView)
         view.addSubview(iView)
+        view.addSubview(PageVCBtn)
         
+        PageVCBtn.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: 10)
+        PageVCBtn.centerX(inView: view)
+        
+    }
+    
+    
+    func pageControlStuff() {
+        let initialPage = 0
+        
+        pageControl.frame = CGRect()
+        //self.pageControl.setIndicatorImage(UIImage(systemName: "car"), forPage: 1)
+        pageControl.currentPageIndicatorTintColor = UIColor.black
+        pageControl.pageIndicatorTintColor = UIColor.lightGray
+        pageControl.numberOfPages = self.myControllers.count
+        pageControl.currentPage = initialPage
+        
+        view.addSubview(self.pageControl)
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        pageControl.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -5).isActive = true
+        pageControl.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: -20).isActive = true
+        pageControl.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        pageControl.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
     }
     
     
@@ -135,9 +196,80 @@ class firstPageVC: UIViewController {
         present(vc, animated: true, completion: nil)
     }
     
-    @objc func runAnimation() {
+    @objc func runAnimatedAlert() {
         print("DEBUG: start moving a block..")
         
+    }
+    
+    
+    @objc func presentPageViewController() {
+        let vc = PageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        vc.modalTransitionStyle = .coverVertical
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
+    
+    
+    @objc func presentPageVC() {
+        print("DEBUG: presenting pageVC..")
+        guard let first = myControllers.first else {
+            return
+        }
+        print("DEBUG: \(String(describing: first))")
+        
+        let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        vc.setViewControllers([first],
+                              direction: .forward,
+                              animated: true,
+                              completion: nil)
+        
+        vc.dataSource = self
+        vc.delegate = self
+        
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+        
+    }
+    
+    
+}
+
+
+//MARK: - extension PageVC
+//this will help present a pageViewController from this VC
+
+extension firstPageVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        
+        guard let index = myControllers.firstIndex(of: viewController), index > 0 else {
+            return nil
+        }
+        let before = index - 1
+        
+        return myControllers[before]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        
+        guard let index = myControllers.firstIndex(of: viewController), index < (myControllers.count - 1) else {
+            return nil
+        }
+        let after = index + 1
+        
+        return myControllers[after]
+    }
+    
+    
+    //let's deal with the pageControl UI stuff
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        
+        if let viewControllers = pageViewController.viewControllers {
+            if let viewControllerIndex = self.myControllers.index(of: viewControllers[0]) {
+                self.pageControl.currentPage = viewControllerIndex
+            }
+        }
     }
     
     
